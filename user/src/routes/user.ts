@@ -8,6 +8,6 @@ router.post("/login", loginUser);
 router.post("/verify", verifyUser);
 router.get("/me", isAuth, myProfile);
 router.get("/user/:id", isAuth, getUser);
-router.get("/user/all", isAuth, getAllUsers);
+router.get("/all-users", isAuth, getAllUsers);
 router.post("/updateName", isAuth, updateName);
 export default router;

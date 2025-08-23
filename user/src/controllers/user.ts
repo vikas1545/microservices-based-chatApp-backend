@@ -40,8 +40,7 @@ export const loginUser = TryCatch(async (req, res) => {
 
 export const verifyUser = TryCatch(async (req, res) => {
   const { email, otp: enteredOtp } = req.body;
-
-  if (email || !enteredOtp) {
+  if (!email || !enteredOtp) {
     return res.status(400).json({ message: "Email & OTP are required" });
   }
 
@@ -68,7 +67,7 @@ export const myProfile = TryCatch(async (req: AuthenticatedRequest, res) => {
 });
 
 export const updateName = TryCatch(async (req: AuthenticatedRequest, res) => {
-  const user = await User.findById(req.user?._id);
+  let user = await User.findById(req.user?._id);
   if (!user) {
     return res.status(404).json({ message: "User not found !" });
   }
@@ -77,7 +76,7 @@ export const updateName = TryCatch(async (req: AuthenticatedRequest, res) => {
   if (!name) {
     return res.status(400).json({ message: "Name is required." });
   }
-  
+  user.name=name;
   await user.save();
 
   const token = generateToken(user);
@@ -85,8 +84,8 @@ export const updateName = TryCatch(async (req: AuthenticatedRequest, res) => {
 });
 
 export const getAllUsers = TryCatch(async (req: AuthenticatedRequest, res) => {
-  const users = await User.find();
-  res.json(users);
+   const users = await User.find();
+  res.json({status:true,data:users});
 });
 
 export const getUser = TryCatch(async (req: AuthenticatedRequest, res) => {
