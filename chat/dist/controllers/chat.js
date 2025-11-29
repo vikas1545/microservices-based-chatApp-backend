@@ -164,12 +164,11 @@ export const getMessagesByChat = TryCatch(async (req, res) => {
         seenAt: new Date(),
     });
     const messages = await Messages.find({ chatId }).sort({ createdAt: 1 });
-    const otherUserId = chat.users.find((id) => id.toString() === userId.toString());
+    const otherUserId = chat.users.find((id) => id.toString() !== userId.toString());
     if (!otherUserId) {
         res.status(400).json({ message: "No other user" });
         return;
     }
-    // add soket work
     try {
         const { data } = await axios.get(`${process.env.USER_SERVICE}/api/v1/user/${otherUserId}`);
         res.json({ messages, user: data });

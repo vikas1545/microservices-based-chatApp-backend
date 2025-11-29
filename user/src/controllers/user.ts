@@ -87,7 +87,7 @@ export const updateName = TryCatch(async (req: AuthenticatedRequest, res) => {
 
 export const getAllUsers = TryCatch(async (req: AuthenticatedRequest, res) => {
    const users = await User.find();
-  res.json({status:true,data:users});
+  res.json({status:true,users:users});
 });
 
 export const getUser = TryCatch(async (req: AuthenticatedRequest, res) => {
