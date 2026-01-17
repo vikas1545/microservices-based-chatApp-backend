@@ -10,6 +10,10 @@ const io = new Server(server, {
     },
 });
 const userSocketMap = {};
+export const getReceiverSocketId = (receiverId) => {
+    //this function returns the socket ID of the receiver if they are online
+    return userSocketMap[receiverId];
+};
 io.on("connection", (socket) => {
     console.log("User connected", socket.id);
     const userId = socket.handshake.query.userId;
